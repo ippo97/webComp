@@ -153,84 +153,29 @@
 			success : function(data) {
 				$("#marche").html(data);
 			}
-		});	
+		});
 	}
 
-		$("#marche").click(prendiModelli);
-		function prendiModelli() {
-			var valore = $("#marche").val();
-			// alert(valore);
-			$.ajax({
-				type : "GET",
-				url : "DammiModelliController",
-				data : {
-					marche : valore
-				},
-				success : function(data) {
-					$("#modelli").attr("disabled", false);
-					$("#modelli").html(data);
-				}
-			});
-		}
-
-	
-	/*--------------------------------------------------
-	 Controllo dati inserimento annuncio
-	 --------------------------------------------------*/
-
-	$("#InsAnnuncio").click(allertTest);
-	function allertTest() {
-		// controllo che i file sono solo jpg
-		// /alert("SONO ENTRATO");
-		var upload = document.getElementById('upfile');
-		var filename = upload.value;
-		var fileExtension = (filename.substring(filename.lastIndexOf(".") + 1));
-		var fileExtension = fileExtension.toLowerCase();
-		if (filename == ""){
-			alert("Seleziona almeno un'immagine!"); return false;}
-		 else if (document.getElementById('modelli').disabled == true) {
-				alert("Devi selezionare un modello!"); return false;
-		} else if (fileExtension == "jpg" || fileExtension == "jpeg") {
-			return true;
-		}else
-			alert("L'estensione deve essere jpg!");
-			return false;
-}
-	// controllo che i file sono massimo 3
-	$('#upfile').change(controlloNumeroFile)
-	function controlloNumeroFile() {
-		// alert("controllofile");
-		var fileUpload = document.getElementById('upfile').files;
-		var nelements = fileUpload.length;
-		if (nelements > 3) {
-			alert("Attenzione hi inserito piu' di 3 foto!");
-			$('input').val("");
-		}
-
-	}
-/*------------------------------------------------------------------------
- * 				CARICAMENTO DEI LINK PER ASTA
- -------------------------------------------------------------------------*/
-	/*$(document).ready(updateLink);
-	function updateLink() {
-		alert("LinkAsta");
-		
-		//document.getElementById("myImg").src = "https://www.w3schools.com/bootstrap/ny.jpg";
-
-	
-		/*$.ajax({
+	$("#marche").click(prendiModelli);
+	function prendiModelli() {
+		var valore = $("#marche").val();
+		// alert(valore);
+		$.ajax({
 			type : "GET",
 			url : "DammiModelliController",
 			data : {
-				idVeicolo : veicolo
+				marche : valore
 			},
 			success : function(data) {
-				alert("entrato");
+				$("#modelli").attr("disabled", false);
+				$("#modelli").html(data);
 			}
-		});*/
-	//}
-
-	
-	
+		});
+	}
+  
+	$("#InserisciAsta").focus(asta);
+	function asta(){
+		console.log('Sopra!');
+	}
 	
 })(jQuery);

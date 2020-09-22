@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.AstaDao;
 import dao.MarcaDao;
+import dao.PuntataDao;
 import dao.RecensioneVenditoreDao;
 import dao.VeicoloDao;
 import model.Asta;
+import model.Puntata;
 import model.RecensioneVenditore;
 import model.Veicolo;
 
@@ -32,9 +34,6 @@ public class CaricaVeicoloController extends HttpServlet {
 			Veicolo veicolo = v.get(0);
 			RecensioneVenditoreDao rDao = new RecensioneVenditoreDao();
 			
-			
-			
-			
 			//recensione venditore
 			List<RecensioneVenditore> rece = rDao.dammiRecensioneVenditore(veicolo.getEmail());
 			request.setAttribute("recensioni", rece);
@@ -43,17 +42,21 @@ public class CaricaVeicoloController extends HttpServlet {
 			request.setAttribute("marca", m.trovaMarca(veicolo.getIdModello()));
 			//veicolo
 			request.setAttribute("veicolo", veicolo);
+			request.setAttribute("idAsta", veicolo.getIdVeicolo());
 			//Asta
 			AstaDao aDao = new AstaDao();
 			ArrayList<Asta> asteV = aDao.dammiAstePerVisualizzare();
 			ArrayList<String> modello = new ArrayList<String>();
 			ArrayList<String> path = new ArrayList<String>();
 			
+			
+			
 			for(Asta ast : asteV) {
 				Veicolo v1 = vDao.findById(ast.getId_veicolo()).get(0);
 				path.add(v1.getLinkUno());
 				modello.add(v1.getIdModello() + " Anno: " + v1.getAnnoImmatricolazione());
 			}
+			
 			
 			request.setAttribute("model", modello);
 			request.setAttribute("path", path);

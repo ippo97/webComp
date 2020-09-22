@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,13 +42,14 @@ public class InserisciastaController extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String us = (String) session.getAttribute("email");
-
+		
+		
 		Asta asta = new Asta();
 		int bAsta = 0;
 		Date dat = null;
 		// se sono loggato
 		if (us != null) {
-			System.out.println(us);
+			System.err.println("Utente inserimento asta -->" + us);
 			Veicolo v = new Veicolo();
 			List<String> urlImage = new ArrayList<String>();
 			/*
@@ -131,8 +133,11 @@ public class InserisciastaController extends HttpServlet {
 							} else if (fieldname.equals("baseAsta")) {
 								bAsta = Integer.parseInt(fieldvalue);
 							} else if (fieldname.equals("data")) {
+								
 								te = fieldvalue;
-								// dat = new SimpleDateFormat("yyyy-mm-dd hh:mm").parse(fieldvalue);
+								System.out.println("DATA1 " + te);
+								//dat = new SimpleDateFormat("yyyy-mm-dd hh:mm").parse(fieldvalue);
+								
 							} else if (fieldname.contentEquals("mydatetime")) {
 								ora = fieldvalue;
 							}
@@ -145,7 +150,8 @@ public class InserisciastaController extends HttpServlet {
 			}
 
 			try {
-				dat = new SimpleDateFormat("yyyy-mm-dd hh:mm").parse(te + " " + ora);
+				dat = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.ITALIAN).parse(te + " " + ora);
+				System.out.println("Date2 " + dat);
 			} catch (Exception e) {
 				System.out.println("problema data! " + e);
 			}
@@ -188,16 +194,17 @@ public class InserisciastaController extends HttpServlet {
 
 			// inserisco sul DB l'asta
 			if (idAnnuncio > 0) {
+				asta.setId_venditore(us);
 				asta.setId_veicolo(idAnnuncio);
-				asta.setDataFineAsta(dat);
+				asta.setDataFineAsta(dat);	//|---------->possibile problema con la data
 				asta.setBaseAsta(bAsta);
 				AstaDao astaDao = new AstaDao();
 				astaDao.inseriscoAsta(asta);
 			}
 
-			request.setAttribute("message", "Asta inserito correttamente!");
+			request.setAttribute("message", "Asta inserita correttamente!");
 			// reindirizzamento ad annuncio completo
-			getServletContext().getRequestDispatcher("/InseriscoAnnuncio.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/inseriscoAsta.jsp").forward(request, response);
 		} else {
 
 			request.setAttribute("problem", "Prima di inserire un asta devi prima eseguire l'accesso!!");

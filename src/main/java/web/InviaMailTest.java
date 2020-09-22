@@ -9,22 +9,26 @@ import javax.mail.internet.*;
 
 public class InviaMailTest {
 
-	private static String USER_NAME = "ippolitob88"; // GMail user name (just the part before "@gmail.com")
-	private static String PASSWORD = "qwertyasd12"; // GMail password
+//	private static String USER_NAME = "ippolitob88"; // GMail user name (just the part before "@gmail.com")
+//	private static String PASSWORD = "qwertyasd12"; // GMail password
 	private static String RECIPIENT = "ippolito.124@gmail.com";
 
 	public static void main(String[] args) {
-		String from = USER_NAME;
-		String pass = PASSWORD;
+//		String from = USER_NAME;
+//		String pass = PASSWORD;
 		String[] to = { RECIPIENT }; // list of recipient email addresses
 		String subject = "Java send mail example";
-		String body = "Ciao controlla cha tannu fricatu ancuna cosa!";
+		String body = "Ciao controlla cha tannu fricatu ancuna cosa! ";
 
-		sendFromGMail(from, pass, to, subject, body);
+		//sendFromGMail(from, pass, to, subject, body);
+		sendFromGMail(to, subject, body);
 
 	}
 
-	private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+	public static void sendFromGMail(String[] to, String subject, String body) {
+		String from = "ippolitob88";
+		String pass = "qwertyasd12";
+		
 		Properties props = System.getProperties();
 		String host = "smtp.gmail.com";
 		props.put("mail.smtp.starttls.enable", "true");

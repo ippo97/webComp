@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>E-SHOP HTML Template</title>
+	<title>C-SHOP</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
@@ -52,16 +52,7 @@
 	<jsp:include page="pageParts/HeadeNavbar.jsp"></jsp:include>
 	<!-- /Heder & navbar -->
 
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li class="active">Blank</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /BREADCRUMB -->
+
 	
 	<!--STATO INSERIMENTO -->
 	<c:if test="${not empty statoInserimentoTrue}">
@@ -99,16 +90,16 @@
 								<input class="input" type="text" name="cognome" placeholder="Cognome" maxlength="20"required autofocus>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email" id="email" maxlength="20" required autofocus>
+								<input class="input" type="email" name="email" placeholder="Email" id="email" maxlength="30" required autofocus>
 							</div>						
 							<div class="form-group">
-								<input class="input" type="password" name="password" placeholder="Password" maxlength="20"required autofocus>
+								<input class="input" type="password" name="password" id="passwor1" placeholder="Password" maxlength="20"required autofocus>
+							</div>
+							<div class="form-group" id="divControllo">
+								<input class="input" type="password" name="cpassword" id="passwor2" placeholder="Conferma Password" maxlength="20" required autofocus>
 							</div>
 							<div class="form-group">
-								<input class="input" type="password" name="cpassword" placeholder="Conferma Password" maxlength="20" required autofocus>
-							</div>
-							<div class="form-group">
-								<button class="primary-btn" id="registrati">Registrati</button>
+								<button class="primary-btn" id="registrati" onclick='controlloLog()'>Registrati </button>
 							</div>
 
 						</div>
@@ -124,6 +115,21 @@
 	<!-- FOOTER -->
 	<jsp:include page="pageParts/Footer.jsp"></jsp:include>
 	<!-- /FOOTER -->
+
+	<script>
+	
+	function controlloLog(){
+		var pw1 = document.getElementById('passwor1').value;
+		var pw2 = document.getElementById('passwor2').value;
+		console.log("contollo-->" + (pw1 == pw2));
+		if(pw1 != pw2){
+			alert("Attenzioni  password non coincidenti!");
+			return false;}
+		return true;
+	}
+	
+	</script>
+
 
 	<!-- jQuery Plugins -->
 	<script src="js/jquery.min.js"></script>

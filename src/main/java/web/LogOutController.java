@@ -20,7 +20,7 @@ public class LogOutController extends HttpServlet {
 		if (oldSession != null) {
 			oldSession.invalidate(); // invalida la sessione se esiste
 		}
-		resp.sendRedirect("index.jsp");
+		resp.sendRedirect("indexAstaController");
 	}
 
 }

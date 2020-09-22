@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import dao.AstaDao;
 import dao.PersonaDao;
+import dao.VeicoloDao;
+import model.Asta;
 import model.Persona;
+import model.Veicolo;
 
 /**
  * Servlet implementation class LoginController
@@ -26,13 +29,13 @@ public class LoginController extends HttpServlet {
 		String paramEmail = request.getParameter("email");
 		String paramPassword = request.getParameter("password");
 
-		System.out.println(paramEmail + " " + paramPassword);
+		//System.out.println(paramEmail + " " + paramPassword);
 
 		PersonaDao pDao = new PersonaDao();
 		List<Persona> utenti = new ArrayList<Persona>();
 		utenti = pDao.findById(paramEmail);
 
-		System.out.println(utenti.toString() + "size" + utenti.size());
+		//System.out.println(utenti.toString() + "size" + utenti.size());
 
 		// se l'autenticazione va a buon fine
 		if (utenti.size() != 0 && paramEmail.equals(utenti.get(0).getEmail())
@@ -48,11 +51,31 @@ public class LoginController extends HttpServlet {
 			currentSession.setAttribute("email", paramEmail);
 			currentSession.setMaxInactiveInterval(10 * 60);
 
+			
+			/*------------------Aste-------------------------*/
+			AstaDao aDao = new AstaDao();
+			ArrayList<Asta> asteV = aDao.dammiAstePerVisualizzare();
+			ArrayList<String> modello = new ArrayList<String>();
+			ArrayList<String> path = new ArrayList<String>();
+			
+			VeicoloDao vDao = new VeicoloDao();
+			for(Asta ast : asteV) {
+				Veicolo v = vDao.findById(ast.getId_veicolo()).get(0);
+				path.add(v.getLinkUno());
+				modello.add(v.getIdModello() + " Anno: " + v.getAnnoImmatricolazione());
+			}
+			
+			request.setAttribute("model", modello);
+			request.setAttribute("path", path);
+			request.setAttribute("aste", asteV);
+			/*--------------------------------------------------*/
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 
 		} else {
 			// se l'autenticazione fallisce
-			response.sendRedirect("Login.jsp");
+			request.setAttribute("fallitoLogin", "f");
+			request.getRequestDispatcher("Login.jsp").forward(request, response);
+			
 		}
 
 	}

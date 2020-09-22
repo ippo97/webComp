@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>E-SHOP HTML Template</title>
+	<title>C-SHOP</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
@@ -45,13 +45,28 @@
 	<%@ page isELIgnored="false"%>
 	<!-- IMPOSTRANTE PER FAR FUNZIONARE JSTL -->
 	
-	
+	<body onload="campoPuntata()">
 	
 	<!-- Heder & navbar -->
 	<jsp:include page="pageParts/HeadeNavbar.jsp"></jsp:include>
 	<!-- /Heder & navbar -->
 
-
+	<!-- Asta inserita correttamente -->
+	<c:if test="${not empty state1}">
+		<div class="alert alert-success">
+			<strong>Success! </strong> ${state1}
+		</div>
+	</c:if>
+	
+	<c:if test="${not empty state2}">
+		<div class="alert alert-danger">
+			<strong>Problema! </strong> ${state2}
+		</div>
+	</c:if>
+	
+	
+	<!-- Asta inserita correttamente -->
+	
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -83,13 +98,15 @@
 										style="width: 100%;">
 								</div>
 								</c:if>
+								
 								<c:if test="${veicolo.linkDue ne 'null'}">
 								<div class="item">
 									<img src="imageAuto/${veicolo.linkDue}"
 										style="width: 100%;">
 								</div>
-								<c:if test="${veicolo.linkTre ne 'null'}">
 								</c:if>
+								
+								<c:if test="${veicolo.linkTre ne 'null'}">
 								<div class="item">
 									<img src="imageAuto/${veicolo.linkTre}"
 										style="width: 100%;">
@@ -110,12 +127,16 @@
 						</div>
 
 					</div>
+					
+					
 					<div class="col-md-6">
+						<form action="InserisciPuntataController" method ="post">
 						<div class="product-body">
 							<div class="product-label">
 								<!--  <span>New</span>
 								<span class="sale">-20%</span>-->
 							</div>
+							
 							<h2 class="product-name">${marca.idMarca} ${veicolo.idModello} Anno: ${veicolo.annoImmatricolazione}</h2>
 							<c:if test="${empty asta}">
 							<h3 class="product-price">${veicolo.prezzo} &euro;</h3>
@@ -133,29 +154,41 @@
 							
 							<p style="font-size:18px"><strong>Modello:</strong> ${veicolo.idModello}</p>
 							<p style="font-size:18px"><strong>Email:</strong> ${veicolo.email}</p>
-							<p style="font-size:18px"><strong>N.telefono: </strong>  345897586</p>
+							<p style="font-size:18px" id="idPun" ><strong>Id: </strong> ${idAsta} </p>
+							
+							<input type="hidden" name="idAsta" value='${idAsta}'>
 							
 							<c:if test="${not empty asta}">
 							
 							<div class="product-btns">
 								<div class="qty-input">
-									<p style="font-size:18px"> <strong>Puntata attuale:</strong> <label id="lbl">hgkgk</label></p>
+									<p style="font-size:18px"> <strong>Scadenza:</strong> ${dataFineAsta}  <strong>Ora:</strong> ${oraFineAsta}</p>
+									<p style="font-size:18px"> <strong>Puntata attuale:</strong> ${pun} &euro;</p>
 									
 								</div>
 							</div>	
 							
-							<div class="qty-input">
-								<input class="input" type="number">
-								<div class="pull-right">
-								<button class="primary-btn ">    Punta   </button>
-									
-								</div>
-							</div>
 							
+							<c:if test="${ empty vincAsta}">
+								<div class="qty-input">
+									<input class="input" type="number" name="puntataUn" id="puntata">
+									<div class="pull-right">
+									<button class="primary-btn" id='puntata' onclick="confermaPuntata()">Punta</button>
+										
+									</div>
+								</div>
 							</c:if>
 							
+							<c:if test="${ not empty vincAsta}">
+								<p style="font-size:18px"><strong>Vincitore asta:</strong> ${vincAsta} </p>
+								</c:if>
+							
+							</c:if>
 						</div>
+						</form>
 					</div>
+					
+					
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-nav">
@@ -236,14 +269,18 @@
 
 							<script type="text/javascript">
 							
-							 function inserisciRecensione() {
-								 //alert("entrato sbagliato!");
+							function campoPuntata() {
+								document.getElementById("puntata").value = '${pun}';
+							}
+							 
+							function inserisciRecensione() {
+								 
 								 var nome = document.getElementById("nome").value;
 								 var email = document.getElementById("email").value;
 								 var recensione = document.getElementById("recensione").value;
 								 var stelle = document.querySelector('input[name="rating"]:checked').value;
 								
-								 //alert(stelle);
+								 
 								 if(!nome || !email || !recensione)
 								 { alert("Compila tutti i campi!"); return false;}
 								
@@ -266,24 +303,44 @@
 									document.getElementById("btnRew").disabled = true;
 							}
 							 
-							// set timeout
-							 var tid = setTimeout(aggPrezzo, 2000);
-							 function aggPrezzo() {
-							  var g = document.getElementById("lbl").innerHTML = "CIao lenmxlln";
-							  
-							  var id = '${asta.id_asta}'
-							  var name='<%=session.getAttribute("email")%>';
-							 $.ajax({
-									 type: "post",
-									 url:"CaricaUltimaPuntata",
-									 data:{idAsta : id},
-									 success:function(data){
-										 //alert(data);
-									 }
-								 });
-							  
-							  tid = setTimeout(aggPrezzo, 2000); // repeat myself
+							function confermaPuntata(){
+								 var puntata = document.getElementById("puntata").value;
+								  var r = confirm("Stai per puntare " + puntata +", confermi?");
+								  if (r == true) {
+								    return true;
+								  } else {
+								    return false;
+								  }
 							 }
+							
+							document.getElementById("puntata").addEventListener("change", controlloPuntata);
+							 
+							 function controlloPuntata() {
+								if(document.getElementById("puntata").value < '${pun}'+ 10){
+									alert("Non e' possibile inseire una puntata minore dell'ultima puntata!");
+									document.getElementById("puntata").value = '${pun}';
+								}
+							}
+							 
+							 // set timeout
+							 //var tid = setTimeout(aggPrezzo, 2000);
+							// function aggPrezzo() {
+							 // var g = document.getElementById("lbl").innerHTML = "CIao lenmxlln";
+							  
+							 // var id = '${asta.id_asta}'
+							 // var name='<%=session.getAttribute("email")%>';
+							//$.ajax({
+								//	 type: "GET",
+								//	 url:"CaricaPuntata",
+								//	 data:{idAsta : id},
+								//	 success:function(data){
+								//		 consol.log(data);
+								//		 document.getElementById("lbl").innerHTML = data;
+								//	 }
+								// });
+							  
+							 // tid = setTimeout(aggPrezzo, 2000); // repeat myself
+							 //}
 							 
 							</script>
 

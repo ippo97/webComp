@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<title>E-SHOP HTML Template</title>
+<title>C-SHOP</title>
 
 <!-- Google font -->
 <link href="https://fonts.googleapis.com/css?family=Hind:400,700"
@@ -84,7 +84,7 @@
 								<!--  <div id="price-slider" ></div> -->
 								<input class="input" type="number" id="prezzoMax"
 									name="PrezzoMax" placeholder="Scrivi il prezzo massimo "
-									min="10" step="1" required >
+									min="0" step="1" required >
 							</div>
 
 							<!-- 	<div class="form-group">
@@ -93,9 +93,10 @@
 							</div>	-->
 
 							<div class="form-group">
-								<button class="primary-btn" id="cerca">Cerca</button>
+								<button class="primary-btn" id="cerca5" onclick='cont()'>Cerca</button>
 							</div>
-
+							
+							
 						</div>
 					</div>
 				</form>
@@ -129,7 +130,7 @@
 				<!-- Product Slick -->
 				<div class="container">
 					<div class="row">
-						<div id="product-slick-1" class="product-slick">
+						<div id="product-slick-1" class="product-slick col-md-12">
 						
 						<c:forEach items="${aste}" var="aste" varStatus="ind">
 							
@@ -139,11 +140,11 @@
 									<!-- <div class="product-label">
 										<span>New</span> <span class="sale">-20%</span>
 									</div>-->
-									<ul class="product-countdown">
+									<!--  <ul class="product-countdown">
 										<li><span>00 H</span></li>
 										<li><span>00 M</span></li>
 										<li><span>00 S</span></li>
-									</ul>
+									</ul>-->
 									<a class="main-btn quick-view"  href="CaricaAstaController?idAsta=${aste.id_asta}">
 										<i class="fa fa-search-plus"></i> Visualizza
 									</a>
@@ -186,6 +187,23 @@
 		<!-- /container -->
 	</div>
 	<!-- /section -->
+	
+	<script>
+	
+	function cont(){
+		var a = document.getElementById('modelli');
+		if(a.disabled == true){
+			alert("Selezionare Modello!");	
+			return false;
+		}else
+			return true;
+	}
+	
+	
+	
+	
+	
+	</script>
 
 
 	<!-- FOOTER -->

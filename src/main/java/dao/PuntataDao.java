@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
+import model.Asta;
 import model.Puntata;
 
 public class PuntataDao {
@@ -20,7 +23,7 @@ public class PuntataDao {
 			PreparedStatement statment;
 			String query = "INSERT INTO public.puntata ("
 						+ "id_puntata, id_persona, id_asta, puntata, ora_puntata) VALUES "
-						+ "(nextval('puntata_sequence')::integer, '"+puntata.getIdPersona()+"'::character varying(20), '"+puntata.getIdAsta()+"'::integer, '"+puntata.getPuntata()+"'::double precision, '"+puntata.getOraPuntata()+"'::timestamp with time zone) returning id_puntata;";
+						+ "(nextval('puntata_sequence')::integer, '"+ puntata.getIdPersona()+"'::character varying(20), '"+puntata.getIdAsta()+"'::integer, '"+puntata.getPuntata()+"'::double precision, '"+puntata.getOraPuntata()+"'::timestamp with time zone) returning id_puntata;";
 			statment = connection.prepareStatement(query);
 			ResultSet result = statment.executeQuery();
 
@@ -58,7 +61,7 @@ public class PuntataDao {
 				p.setPuntata(result.getDouble("puntata"));
 				p.setOraPuntata(new SimpleDateFormat("yyyy-mm-dd").parse(result.getString("ora_puntata")));
 				
-				System.out.println(result.getDouble("puntata"));
+				//System.out.println(result.getDouble("puntata"));
 				
 				punt.add(p);
 			}
@@ -94,7 +97,7 @@ public class PuntataDao {
 				p.setPuntata(result.getDouble("puntata"));
 				p.setOraPuntata(new SimpleDateFormat("yyyy-mm-dd").parse(result.getString("ora_puntata")));
 				
-				System.out.println(result.getDouble("puntata"));
+				//System.out.println(result.getDouble("puntata"));
 				
 				punt.add(p);
 			}
@@ -111,16 +114,19 @@ public class PuntataDao {
 	}
 	
 	
-	public static void main(String[] args) throws ParseException {
-		Puntata p = new Puntata();
+public static void main(String[] args) throws ParseException {		
 		
-		p.setIdPuntata(12);
-		p.setIdPersona("i");
-		p.setIdAsta(1);
-		p.setPuntata(125.56);
-		p.setOraPuntata(new SimpleDateFormat("yyyy-mm-dd").parse("2200-02-12"));
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String strData = "2020-09-24 23:53";  
+		java.util.Date nuovaData = format.parse(strData);
+		System.out.println("data1-> " + strData);
+		System.out.println("data2-> " + nuovaData);
 		
-		PuntataDao pDa = new PuntataDao();
-		System.out.println(pDa.inseriscoPuntata(p));
+		Date datas = nuovaData;
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+		String da = formater.format(datas);
+		
+		System.out.println(da);
+		
 	}
 }

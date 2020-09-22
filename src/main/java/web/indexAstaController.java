@@ -3,6 +3,7 @@ package web;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +44,12 @@ public class indexAstaController extends HttpServlet {
 			modello.add(v.getIdModello() + " Anno: " + v.getAnnoImmatricolazione());
 		}
 		
+		
 		request.setAttribute("model", modello);
 		request.setAttribute("path", path);
 		request.setAttribute("aste", asteV);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
+		
 
 	}
 

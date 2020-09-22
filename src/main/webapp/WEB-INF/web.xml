@@ -76,18 +76,31 @@
   	<description></description>
   	<servlet-class>web.CaricaAstaController</servlet-class>
   </servlet>
+ 
+ 
+ 
   <servlet>
   	<servlet-name>InserisciPuntataController</servlet-name>
   	<display-name>InserisciPuntataController</display-name>
   	<description></description>
   	<servlet-class>web.InserisciPuntataController</servlet-class>
   </servlet>
+  
   <servlet>
-  	<servlet-name>CaricaUltimaPuntata</servlet-name>
-  	<display-name>CaricaUltimaPuntata</display-name>
+  	<servlet-name>CaricaPuntata</servlet-name>
+  	<display-name>CaricaPuntata</display-name>
   	<description></description>
-  	<servlet-class>web.CaricaUltimaPuntata</servlet-class>
+  	<servlet-class>web.CaricaPuntata</servlet-class>
   </servlet>
+
+  
+  <servlet-mapping>
+  	<servlet-name>indexAstaController</servlet-name>
+  	<url-pattern></url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <servlet-mapping>
   	<servlet-name>InserisciPersonaController</servlet-name>
   	<url-pattern>/InserisciPersonaController</url-pattern>
@@ -140,8 +153,12 @@
   	<servlet-name>InserisciPuntataController</servlet-name>
   	<url-pattern>/InserisciPuntataController</url-pattern>
   </servlet-mapping>
+ 
   <servlet-mapping>
-  	<servlet-name>CaricaUltimaPuntata</servlet-name>
-  	<url-pattern>/CaricaUltimaPuntata</url-pattern>
+  	<servlet-name>CaricaPuntata</servlet-name>
+  	<url-pattern>/CaricaPuntata</url-pattern>
   </servlet-mapping>
+  
+  
+  
 </web-app>

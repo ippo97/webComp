@@ -81,19 +81,19 @@
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
-			<div class="row">
+			<div class="row" >
 				<form id="checkout-form" class="clearfix" action="InserisciastaController" method="post" enctype="multipart/form-data">
 					<div class="col-md-3">
 					</div>
 					
-					<div class="col-md-6">
+					<div class="col-md-6" id="cont">
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Insersci i dati del tuo veicolo</h3>
 							</div>
 							<div class="form-group">
 								<p class="title">Marca</p>
-								<select class="input" id="marche" required autofocus>
+								<select class="input" id="marche"  autofocus> <!-- required  -->
 		  							<option value="null">----</option>
 								</select>
 							</div>
@@ -107,51 +107,51 @@
 							
 							<div class="form-group">
 							<p class="title">Immagini</p>
-							<input class="input" type="file" name="uploadFile" id="upfile" max=3 multiple/>
+							<input class="input" type="file" name="uploadFile" id="upfile"  multiple/> <!-- max=3  -->
 							</div>
 								
 									
 						  	<div class="form-group">
 								<p class="title">Descrizione</p>
-								<textarea class="inputTextArea" rows="5"  name="descrizione" placeholder="Descrivi veicolo"   required autofocus></textarea>
+								<textarea class="inputTextArea" rows="5"  name="descrizione" placeholder="Descrivi veicolo" autofocus required></textarea>
 							</div>
 						
 							<div class="form-group">
 								<p class="title">Anno di immatricolazione</p>
-								<input class="input"  type="number"  name="annoImmatr" placeholder="Scrivi l'anno di immatricolazione" min="1900" step="1" required autofocus>
+								<input class="input"  type="number" id="annoImm" name="annoImmatr" placeholder="Scrivi l'anno di immatricolazione"   autofocus required> <!--required min="1900" step="1" -->
 							</div>
 							<div class="form-group">
 								<p class="title">Km del veicolo</p>
-								<input class="input" type="number" name="kmVeicolo" placeholder="scrivi i Km del veicolo" min="100" step="100" required autofocus>
+								<input class="input" type="number" name="kmVeicolo" placeholder="scrivi i Km del veicolo"   autofocus required> <!-- min="100" step="100" -->
 							</div>
 							 
 							
-							<div class="section-title">
+							<div class="section-title" >
 								<h3 class="title">Dati relativi all'asta</h3>
 							</div>
 							<div class="form-group">
 								<p class="title">Base dell'asta</p>
-								<input class="input" type="number" name="baseAsta" placeholder="Base dell'asta" required autofocus>
+								<input class="input" type="number" name="baseAsta" placeholder="Base dell'asta"  autofocus required>
 							</div>
-							<div class="form-group">
+							<div class="form-group" >
 								<p class="title">Data di fine asta</p>
-								  <input class="input" type="date" name="data" required autofocus>								
+								  <input class="input" type="date" name="data" id="data" onchange='controlloData()' autofocus required>								
 							</div>
 							<div class="form-group">
 								<p class="title">Ora di fine asta</p>
-								  <input class="input" type="time" name="mydatetime">								
+								  <input class="input" type="time" name="mydatetime" autofocus required>								
 							</div>
 							
 							<div class="form-group">
-							<p>Date/Time attuale: <span id="datetime"></span></p>
+							<p>Date/Ora attuale: <span id="datetime"></span></p>
 							</div>
 							<script>
 							var dt = new Date();
-							document.getElementById("datetime").innerHTML = (("0"+dt.getDate()).slice(-2)) +"."+ (("0"+(dt.getMonth()+1)).slice(-2)) +"."+ (dt.getFullYear()) +" "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
+							document.getElementById("datetime").innerHTML = (("0"+dt.getDate()).slice(-2)) +"/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (dt.getFullYear()) +" "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
 							</script>
 							
 							<div class="form-group">
-								<button class="primary-btn"  id="InsAnnuncio">Inserisci asta</button>
+								<button class="primary-btn"  id="InserisciAsta" onmouseover='controllo()' >Inserisci asta</button>
 							</div>
 						</div>
 					</div>
@@ -168,7 +168,97 @@
 	<!-- FOOTER -->
 	<jsp:include page="pageParts/Footer.jsp"></jsp:include>
 	<!-- /FOOTER -->
-
+	
+	<script>
+	
+	function controllo(){
+		
+		var a = document.getElementById('modelli');
+		
+		var upload = document.getElementById('upfile');
+		var filename = upload.value;
+		var fileExtension = (filename.substring(filename.lastIndexOf(".") + 1));
+		fileExtension = fileExtension.toLowerCase();
+		
+		if(a.disabled == true){
+			alert("Selezionare Modello!");	
+		}
+		else if(filename == ""){
+			alert("Seleziona almeno un'immagine!");
+			return false;
+		}else if (fileExtension == "jpg" || fileExtension == "jpeg") {
+			return true;
+		}else{
+			alert("L'estensione deve essere jpg!-->" + fileExtension);
+			$('input').val("");
+			document.getElementById("upfile").focus();
+			return false;
+		}
+		
+		//controllo anno immatricolazione
+		var annoIm = document.getElementById('annoImm');
+		var dt = new Date();
+		
+		if(annoIm.value > dt.getFullYear()){
+			alert("Anno immatricolazione non corretto!");
+			annoIm.value ="";
+			annoIm.focus();
+		}
+		
+	}
+	
+	function controlloData() {
+		var data = document.getElementById("data");
+		var dt = new Date();
+		var dt1 = new Date();
+		//if(dt.getDate()>data.day dt.getMonth() dt.getFullYear())
+		
+		 // Parse the date parts to integers
+    	var dateString = data.value;
+		var parts   = dateString.split("-");
+    	var day     = parseInt(parts[2], 10);
+    	var month   = parseInt(parts[1], 10);
+    	var year    = parseInt(parts[0], 10);
+		
+    	if(year < dt.getFullYear()){/*se anno piu piccolo*/ alert("Data non corretta - Anno"); document.getElementById("data").value = ""; }
+    	if(year == dt.getFullYear() && month < (("0"+(dt.getMonth()+1)).slice(-2))) {/*se è nello stesso anno ma con mese inferiore*/alert("Data non corretta - Mese"); document.getElementById("data").value = "";}
+    	if(year == dt.getFullYear() && month == (("0"+(dt.getMonth()+1)).slice(-2)) && day < dt.getDate()) {/*se è nello stesso anno, mese, con un giorno inferiore*/alert("Data non corretta - Anno Mese Data"); document.getElementById("data").value = "";}
+    	if(year == dt.getFullYear() && month == (("0"+(dt.getMonth()+1)).slice(-2)) && day == dt.getDate()) {/*se è nello stesso anno, mese, giorno*/alert("Data non corretta - Oggi non è possibile inserire un'asta!"); document.getElementById("data").value = "";}
+    	
+    	//console.log(year + " " + day + " " + month);
+    	//console.log(dt.getFullYear() + " " + dt.getDate() + " " + (("0"+(dt.getMonth()+1)).slice(-2)));
+	}
+	
+	
+	
+	// controllo che i file sono massimo 3
+	$('#upfile').change(controlloNumeroFile);
+	function controlloNumeroFile() {
+		// alert("controllofile");
+		var fileUpload = document.getElementById('upfile').files;
+		var nelements = fileUpload.length;
+		if (nelements > 3) {
+			alert("Attenzione hai inserito piu' di 3 foto!");
+			$('input').val("");
+		}
+	}
+	
+	</script>
+	
+	
+	
+	
+	<!--  <script>
+	//controllo se è stato selezionato un modello
+	var selModel = false;
+	var a = document.getElementById('modelli');
+	a.addEventListener('click',function(){
+		selModel = true;
+		alert(selModel);
+	})
+	
+	</script> -->
+	
 	<!-- jQuery Plugins -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

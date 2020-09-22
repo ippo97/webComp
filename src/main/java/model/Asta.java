@@ -1,9 +1,14 @@
 package model;
-import java.util.Date;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class Asta {
 	private int id_asta;
 	private int id_veicolo;
-	private Date dataFineAsta;
+	//private Date dataFineAsta;
+	private java.util.Date dataFineAsta;///---------------fix date
 	private int baseAsta;
 	private int prezzoFinale;
 	private String utenteVincitore;
@@ -21,10 +26,10 @@ public class Asta {
 	public void setId_veicolo(int id_veicolo) {
 		this.id_veicolo = id_veicolo;
 	}
-	public Date getDataFineAsta() {
+	public java.util.Date getDataFineAsta() {
 		return dataFineAsta;
 	}
-	public void setDataFineAsta(Date dataFineAsta) {
+	public void setDataFineAsta(java.util.Date dataFineAsta) {
 		this.dataFineAsta = dataFineAsta;
 	}
 	public int getBaseAsta() {
@@ -59,5 +64,15 @@ public class Asta {
 				+ ", id_venditore=" + id_venditore + "]";
 	}
 	
+	public static void main(String[] args) throws ParseException {		
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String strData = "2020-02-26 22:02:00+01";  
+		java.util.Date nuovaData = format.parse(strData);
 	
+		Asta a = new Asta();
+		a.setDataFineAsta(nuovaData);
+		/*format.format(fechaNueva)*/
+		System.out.println(a.getDataFineAsta()); // Prints 2013-10-10 10:49:29
+	}
 }

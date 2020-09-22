@@ -49,7 +49,7 @@ public class RecensioneVenditoreDao {
 
 		try {
 			PreparedStatement statment;
-			String query = "SELECT * FROM public.rec_venditore WHERE email_venditore = '" + venditore + "' ORDER by data DESC";
+			String query = "SELECT * FROM public.rec_venditore WHERE email_venditore = '" + venditore + "' ORDER by data ASC";
 			statment = connection.prepareStatement(query);
 			ResultSet result = statment.executeQuery();
 
@@ -87,7 +87,7 @@ public class RecensioneVenditoreDao {
 		r.setNomeRevensitore("Aldo");
 		r.setEmailRecensitore("antostico");
 		d.inseriscoRecensione(r);
-		System.out.println(d.inseriscoRecensione(r)); 
+		//System.out.println(d.inseriscoRecensione(r)); 
 	}
 }
 

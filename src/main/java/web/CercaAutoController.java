@@ -31,8 +31,12 @@ public class CercaAutoController extends HttpServlet {
 		
 		request.setAttribute("annunci", veicoli);
 		
-		getServletContext().getRequestDispatcher("/products.jsp").forward(
+		if(veicoli.size() > 0)
+			getServletContext().getRequestDispatcher("/products.jsp").forward(
                 request, response);
+		else
+			getServletContext().getRequestDispatcher("/NotFound.jsp").forward(
+	                request, response);
 	}
 
 }

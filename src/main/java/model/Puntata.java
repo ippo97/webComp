@@ -7,7 +7,7 @@ public class Puntata {
 	int idAsta;
 	String idPersona;
 	double puntata;
-	Date oraPuntata;
+	private java.util.Date oraPuntata;
 	
 	public int getIdPuntata() {
 		return idPuntata;
@@ -33,10 +33,11 @@ public class Puntata {
 	public void setPuntata(double puntata) {
 		this.puntata = puntata;
 	}
-	public Date getOraPuntata() {
+	
+	public java.util.Date getOraPuntata() {
 		return oraPuntata;
 	}
-	public void setOraPuntata(Date oraPuntata) {
+	public void setOraPuntata(java.util.Date oraPuntata) {
 		this.oraPuntata = oraPuntata;
 	}
 	@Override

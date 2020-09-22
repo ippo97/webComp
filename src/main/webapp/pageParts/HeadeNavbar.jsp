@@ -11,19 +11,19 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="indexAstaController">
 							<img src="./img/logo.png" alt="">
 						</a>
 					</div>
 					<!-- /Logo -->
-					<!-- Search -->
+					<!-- Search 
 					<div class="header-search">
 						<form>
 							<input class="input search-input" type="text" placeholder="Cerca la tua auto">
 							<button class="search-btn"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
-					<!-- /Search -->
+					 /Search -->
 				</div>
 				<div class="pull-right">
 					<ul class="header-btns">
@@ -80,13 +80,13 @@
 						<li><a href="InserisciAnnuncioController">Inserisci Annuncio</a></li>
 						<li><a href="InserisciastaController">Inserisci Asta</a></li>
 						
-						<li><a href="#">Sales</a></li>
+						<!-- <li><a href="#">Sales</a></li>
 						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pagine (UTILISSIME) <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="products.jsp">Products</a></li>
 								<li><a href="product-page.jsp">Product Details</a></li>
 							</ul>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 				<!-- menu nav -->

@@ -42,7 +42,18 @@ public class InserisciPersonaController extends HttpServlet {
 		String message2 = null;
 		if(state) {
 			message1 = "Utente inserito correttamente!";
-			request.setAttribute("statoInserimentoTrue", message1);}
+			request.setAttribute("statoInserimentoTrue", message1);
+			
+			
+			String RECIPIENT = email;
+			String[] to = { RECIPIENT };
+			String body ="Benvenuto " + nome + " " + cognome +" in C-SHOP! il tuo account è stato inserito correttamente.";
+			String sub = "Iscrizione avvenuta correttamente su C-SHOP!";
+			InviaMailTest.sendFromGMail(to, sub, body);
+			System.out.println("email inviata");
+			
+			
+		}
 		else {
 			message2 = "Problemi con l'inserimento dell'utente!";
 			request.setAttribute("statoInserimentoFalse", message2);}

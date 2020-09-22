@@ -13,45 +13,6 @@ import model.Persona;
 
 public class PersonaDao {
 	private DataSource dataSource = new DataSource();
-	
-	/* Restiruisce tutte le persone */
-
-/*	public List<Persona> findAll() {
-
-		List<Persona> utenti = new ArrayList<Persona>();
-
-		Connection connection = this.dataSource.getConnection();
-		Persona persona;
-
-		try {
-			PreparedStatement statment;
-			String query = "SELECT * FROM public.persona";
-			statment = connection.prepareStatement(query);
-			ResultSet result = statment.executeQuery();
-
-			while (result.next()) {
-				persona = new Persona();
-				persona.setEmail(result.getString("email"));
-				persona.setNome(result.getString("nome"));
-				persona.setCognome(result.getString("cognome"));
-				persona.setDataNascita(result.getDate("data_nascita"));
-				
-
-				utenti.add(persona);
-			}
-
-		} catch (SQLException e) {
-			throw new PersistenceException(e.getMessage());
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new PersistenceException(e.getMessage());
-			}
-		}
-
-		return utenti;
-	}*/
 
 	/* Restiruisce tutte le persone che hanno quel dato id (LOGIN) */
 
@@ -96,7 +57,7 @@ public class PersonaDao {
 	public boolean inseriscoNuonoUtente(Persona p) {
 		
 		if(findById(p.getEmail()).size() == 0)
-		{
+		{System.err.println(findById(p.getEmail()).size());
 		
 		Connection connection = this.dataSource.getConnection();
 			try {
@@ -111,7 +72,7 @@ public class PersonaDao {
 				
 				String query = "INSERT INTO public.persona (\r\n" + 
 						"email, nome, cognome, password) VALUES (\r\n" + 
-						"'"+p.getEmail()+"'::character varying(20), '"+p.getNome()+"'::character varying(20), '"+p.getCognome()+"'::character varying(20), '"+ p.getPassword()+"'::character varying(20))\r\n" + 
+						"'"+p.getEmail()+"'::character varying(30), '"+p.getNome()+"'::character varying(20), '"+p.getCognome()+"'::character varying(20), '"+ p.getPassword()+"'::character varying(20))\r\n" + 
 						" returning email;"; 
 				statment = connection.prepareStatement(query);
 				ResultSet result = statment.executeQuery();
@@ -121,7 +82,6 @@ public class PersonaDao {
 				throw new PersistenceException(e.getMessage());
 			} finally {
 				try {
-					System.out.println("problemi di ciusura connessione");
 					connection.close();
 				} catch (SQLException e) {
 					throw new PersistenceException(e.getMessage());
